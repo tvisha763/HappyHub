@@ -1,0 +1,389 @@
+{% extends 'main.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert mt-3 alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<div class="jumbotron jumbotron-fluid">
+ 
+    <div class="container">
+      <h1 class="display-4">Your Moods</h1>
+      <p class="lead">The goal: to get most of your mood points to the happy level.</p>
+      <div class="graphs">
+        <div class="chartbox">
+        <canvas id="barChart" width="25px" height="25px"></canvas>
+        <div class="container graphText">
+            <p>Your mood this week</p>
+          </div>
+        </div>
+        <div class="chartbox">
+            <canvas id="lineChart" width="200" height="200"></canvas>
+            <div class="container graphText">
+                <p>Your mood over time</p>
+              </div>
+        </div>
+        <div class="chartbox">
+            <canvas id="pieChart" width="200" height="200"></canvas>
+            <div class="container graphText">
+                <p>Your moods</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div style="margin-bottom: 50px;">
+        <!-- <p style="size: 50px;margin: 50px;margin-bottom: 30px;">History of this photograph: This photo is called Earthrise, and it was taken by astronaut William Anders from lunar orbit on the Apollo 8 mission. It was taken in 1968, a truly discouraging year. But at the end of it, we sent humans the farthest we had ever sent them, the moon. But the most important discovery we made was ourselves. For many people, Earthrise highlighted the paradoxical context in which we exist: Our planet is simultaneously cosmically insignificant, and the most important thing we share as a species. This one photo showed Earth the way it is, the way it is meant to be, a tiny blue marble in an inky abyss, without borders and politics. Just one planet that is that is ours to protect and cherish. This one photograph sparked the environmental movement. The way this photo inspired so many to take care of our planet, we hope it inspires you to take care of yourself, because you are just as important. You are the only you in the universe, and you need to be protected.</p> -->
+    </div>
+    <br>
+    <br>
+  </div>
+        
+    
+    
+    
+    
+    
+    
+    <script>
+        var yLabels = {
+            1 : 'sad', 
+            2 : 'anxious', 
+            3 : 'happy'
+        }
+        var data = {
+                labels: [{% for d in dates %} '{{d}}', {% endfor %}],
+                datasets: [{
+                    label: 'mood',
+                    data: [{% for d in data %} {{d.moodnum}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+        };
+
+        
+    
+
+
+        var config = {
+            type: 'bar',
+            data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index){
+                            if (this.getLabelForValue(value) == 1){
+                                return 'Sad'
+                            }
+                            else if (this.getLabelForValue(value) == 2){
+                                return 'Anxious'
+                            }
+                            else if (this.getLabelForValue(value) == 3){
+                                return 'Happy'
+                            }
+                            }
+                        
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = "mood";
+
+                                if (barChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == 1){
+                                    var value = "sad";
+                                }
+                                else if (barChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == 2){
+                                    var value = "anxious";
+                                }
+                                else if (barChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == 3){
+                                    var value = "happy";
+                                };
+                                return label + ' : ' + value;
+                            }
+                            
+
+                        }
+                    },
+                    
+                }
+            }
+        }
+
+
+    
+        var barChart = new Chart(
+            document.getElementById('barChart'),
+            config
+        );
+
+        
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sad', 'Anxious', 'Happy'],
+                datasets: [{
+                    label: 'mood',
+                    data: [{{sadFull}}, {{anxFull}}, {{happyFull}}],
+                    backgroundColor: [
+                        // 'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        // 'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        // 'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        // 'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+            
+                plugins: {
+                    tooltip: {
+                        
+                        callbacks: {
+                            
+                            label: function(tooltipItem, data) {
+
+                                if (pieChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == {{sadFull}}){
+                                    var label = 'Sad'
+                                    var num = {{sadFull}}
+                                    var len = {{length}}
+                                    var value = String(Math.round(num*100/len)) + "%";
+                                }
+                                else if (pieChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == {{anxFull}}){
+                                    var label = 'Anxious'
+                                    var num = {{anxFull}}
+                                    var len = {{length}}
+                                    var value = String(Math.round(num*100/len)) + "%";
+                                }
+                                else if (pieChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == {{happyFull}}){
+                                    var label = 'Happy'
+                                    var num = {{happyFull}}
+                                    var len = {{length}}
+                                    var value = String(Math.round(num*100/len)) + "%";
+                                };
+                                return label + ' : ' + value + '   ' + String(pieChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] + " day(s)");
+                            }
+                            
+
+                        }
+                    },
+                }
+            },
+            
+        });
+
+        
+
+        
+        var yLabels = {
+            1 : 'sad', 
+            2 : 'anxious', 
+            3 : 'happy'
+        }
+        var data = {
+                labels: [{% for d in allDates %} '{{d}}', {% endfor %}],
+                datasets: [{
+                    label: 'mood',
+                    data: [{% for d in fullData %} {{d.moodnum}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 10)',
+                        'rgba(54, 162, 235, 10)',
+                        'rgba(255, 206, 86, 10)',
+                        'rgba(75, 192, 192, 10)',
+                        'rgba(153, 102, 255, 10)',
+                        'rgba(255, 159, 64, 10)'
+                    ],
+                    borderColor: [
+                        'rgba(50, 100, 200, 0.8)',
+                    ],
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    
+                }]
+        };
+
+        
+
+
+
+        var config = {
+            type: 'line',
+            data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index){
+                            if (this.getLabelForValue(value) == 1){
+                                return 'Sad'
+                            }
+                            else if (this.getLabelForValue(value) == 2){
+                                return 'Anxious'
+                            }
+                            else if (this.getLabelForValue(value) == 3){
+                                return 'Happy'
+                            }
+                            }
+                        
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = "mood";
+
+                                if (lineChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == 1){
+                                    var value = "sad";
+                                }
+                                else if (lineChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == 2){
+                                    var value = "anxious";
+                                }
+                                else if (lineChart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] == 3){
+                                    var value = "happy";
+                                };
+                                return label + ' : ' + value;
+                            }
+                            
+
+                        }
+                    },
+                }
+                
+            }
+        }
+
+
+        
+    var lineChart = new Chart(
+        document.getElementById('lineChart'),
+        config
+    );
+
+
+  </script>
+    <section class="journal" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 1200px; margin: auto; background-color: #0F111B;">
+        
+            <div class="container my-5 py-5" >
+            <div class="row d-flex justify-content-center" >
+                <div class="col-md-12 col-lg-10"style="overflow-y: auto; height: 450px;">
+                <div class="card text-dark">
+                    <div class="journalhead card-body p-4" style="background-color: #00171F; color: #F4F4ED;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); position: relative;">
+                        <h3 class="mb-0">{{uname}}'s journal</h4>
+                        <p class="fw-light mb-4 pb-2">Your window to your past</p>
+                    </div>
+                    <hr class="my-0" />
+                    {% for data in fullDataRev %}
+                        <div class="card-body p-4">
+                            
+                
+                            <div class="d-flex flex-start">
+                                <div>
+                                <h6 class="fw-bold mb-1">{{data.mood}}</h6>
+                                <div class="d-flex align-items-center mb-3">
+                                    <p class="mb-0">
+                                    {{data.date}}
+                                </div>
+                                <p class="mb-0">
+                                    {{data.journal}}
+                                </p>
+                                <br>
+                                <strong class="mb-0">
+                                    Diet: {{data.diet}}
+                                </strong>
+                                <br>
+                                <strong class="mb-0">
+                                    Exercise: {{data.exercise}}
+                                </strong>
+                                <br>
+                                <strong class="mb-0">
+                                    {{data.sleep}} hours of sleep
+                                </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-0" />
+                    {% endfor %}
+                    
+                </div>
+                
+            </div>
+            </div>
+        
+      </section>
+
+
+  <!-- <div class="journal" style="overflow-x:hidden; overflow-y: auto; height: 300px;width: 1600px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 30px;"> -->
+        
+        
+            
+    <!-- </div> -->
+
+    <div class="groups" >
+        
+        <div class="inner-groups">
+        {% for group in groups %}
+        <div class="card text-center" style="width: 18rem; margin: 30px; background-color: #5CC1EE; color: #F0EFF1; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); display: inline-block;">
+            <div class="card-body">
+                <h4 class="card-title">{{group.name}}</h4>
+                <p class="card-text">{{group.description}}</p>
+                <strong style="display: block;">{{group.n}} members</strong>
+                <br>
+                <a href="{% url 'groupChat' group.id %}" class="btn btn-warning"style="display: inline-block;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Group Chat</a>
+                <br>
+                
+                <form action="{% url 'leaveGroup' %}" method="post" id="join" style="display: inline-block;">
+                    {% csrf_token %}
+                    
+                    <input type="hidden" name="group" value="{{group.name}}">
+                    <button type = "submit" class="btn btn-danger"style="display: inline-block; margin: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Leave</button>
+                </form>
+                
+            </div>
+        </div>
+     {% endfor %}
+    </div>
+
+    </div>
+  
+
+     
+
+{% endblock %}

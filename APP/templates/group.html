@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block title %}Join Groups{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert mt-3 alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+    <form action="{% url 'group' %}" method="post" id="create">
+        {% csrf_token %}
+        <input name="name" placeholder="group name"/>
+        <br>
+        <textarea name="description" id=""  placeholder="description"></textarea>
+        <br>
+        <button type="submit">Create A Group</button>
+    </form>
+    <br>
+    <br>
+    {% for group in groups %}
+        {{group.name}}
+        <br>
+        {{group.description}}
+        <br>
+        {{group.n}} members
+        <br>
+        <form action="{% url 'joinGroup' %}" method="post" id="join">
+            {% csrf_token %}
+            <input type="hidden" name="group" value="{{group.name}}">
+            <button type = "submit">Join</button>
+        </form>
+        <br>
+        <br>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,186 @@
+/* footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+} */
+
+html{
+    background-color:#5C82A0;
+    background-size: cover;
+}
+
+.navbar{
+    min-height: 50px;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+main{
+    padding-bottom: 30px;
+    padding-top: 60px;
+}
+
+.chartbox{
+    display: inline-block;
+    height: 450px;
+    width: 385px;
+    margin: 20px;
+    background-color: #F0EFF1;
+    color: #50326B;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.graphs{
+    display: block;
+    margin: auto;
+}
+
+main{
+    background-color: #8093F1;
+    background-size: cover;
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    background-size: cover;
+    background-color: #8093F1;
+    
+}
+body,
+html { height: 100%;}
+.nav .open > a, 
+.nav .open > a:hover, 
+.nav .open > a:focus {background-color: transparent;}
+
+.graphText{
+    padding: 20px;
+    border-color: black;
+}
+
+.alert{
+    margin-top: 100px;
+}
+
+.jumbotron{
+    color: #F0EFF1;
+    background-image:url(../assets/earthrise4.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* 
+.jumbotron h1{
+    margin-top: 50px;
+} */
+
+.groups{
+   
+    background-image: url('../assets/flowers.png'); 
+    max-width: 1300px; 
+    margin: auto; 
+    padding-left: 100px; 
+    padding-right: 100px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-size: cover;
+    max-width: 1300px;  
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+
+.journal{
+    background-image: url('../assets/tree2.png'); 
+    background-size: cover;
+    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    
+}
+
+.inner-groups{
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    
+    
+}
+
+.webcam{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.webcam button{
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.webcam textarea{
+    margin: auto;
+    min-width: 16.5rem;
+    padding: 10px;
+    height: 270px;
+}
+
+.card{
+    border-radius: 0px;
+    
+}
+
+.card-photo{
+    background-color: #1E2833;
+    margin-right: 20px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-journal{
+    background-color: #1E2833;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.write-journal{
+    background-image: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
+    background-color: #F0EFF1;
+    /* box-sizing: border-box; */
+    font-size: 16px;
+}
+
+.moodcheck-div{
+    margin-top: 30px;
+    background-color: #F7AEF8;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    position: fixed;
+    transform:translate(-50%, -50%);
+    top:50%;
+    left:50%;
+    padding-left:50px;
+    padding-right:50px;
+    padding-top: 30px;
+    position:absolute;
+    padding-top:30px;
+    padding-bottom:40px;
+    transform:translate(-50%, -50%);
+    padding-bottom: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+

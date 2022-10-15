@@ -1,0 +1,145 @@
+{% extends 'main.html' %}
+
+
+{% block title %}Vibe Check{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert mt-3 alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+   <br>
+   <br>
+   <div class="moodcheck-div">
+    <form class="webcam" method="POST" action="{% url 'takePhoto' %}" enctype="multipart/form-data">
+        <div class="card card-photo" style="width: 20rem;">
+            <video class="card-img-top" id="video" autoplay></video>
+            <canvas id="canvas" class="display"></canvas>
+            <input type="hidden" name="photo" id="photo" value=""/>
+            <button id="startbutton1" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" class="btn btn-info" >Take Photo</button>
+        </div>
+        <div class="card card-journal" style="width: 20rem;">
+            <div class="card-body">
+                <center>
+                <textarea placeholder="journal your thoughts" name="journal" class="write-journal"></textarea>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">diet</span>
+                    </div>
+                    <input class="form-control" type="text" name="diet" />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">exercise</span>
+                    </div>
+                    <input class="form-control" type="text" name="exercise" />
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control" type="number" name="sleep" />
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">hours of sleep</span>
+                    </div>
+                </div>
+            </center>
+                
+                <button id="submit" class="btn btn-success" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" type="submit">submit</button>
+            </div>
+          </div>
+        {% csrf_token %}
+    </div>
+                                         
+                                             
+                                                
+                         
+                
+                
+                
+                
+                
+                
+                      
+  </form>
+  <script>
+    (function() {
+
+
+        var width = 320;    
+        var height = 0;    
+        var streaming = false;  
+        var video = null;
+        var canvas = null;
+        var photo = null;
+        var startbutton1 = null;
+
+        
+
+        function startup() {
+        video = document.getElementById('video');
+        canvas = document.getElementById('canvas');
+        photo = document.getElementById('photo');
+        startbutton1 = document.getElementById('startbutton1');
+        
+        navigator.mediaDevices.getUserMedia({video: true, audio: false})
+        .then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function(err) {
+            console.log("An error occurred: " + err);
+        });
+
+        video.addEventListener('canplay', function(ev){
+            if (!streaming) {
+            height = video.videoHeight / (video.videoWidth/width);
+
+
+            if (isNaN(height)) {
+                height = width / (4/3);
+            }
+
+            video.setAttribute('width', width);
+            video.setAttribute('height', height);
+            canvas.setAttribute('width', width);
+            canvas.setAttribute('height', height);
+            streaming = true;
+            }
+        }, false);
+
+        startbutton1.addEventListener('click', function(ev){
+            takepicture();
+            ev.preventDefault();
+        }, false);
+
+        clearphoto();
+        }
+
+        function clearphoto() {
+        var context = canvas.getContext('2d');
+        context.fillStyle = "#AAA";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var data = canvas.toDataURL('image/png');
+        photo.setAttribute('src', data);
+        }
+
+        function takepicture() {
+        
+        var context = canvas.getContext('2d');
+        if (width && height) {
+            canvas.width = width;
+            canvas.height = height;
+            context.drawImage(video, 0, 0, width, height);
+            
+            var data = canvas.toDataURL('image/png').replace(/^data:image\/png;base64,/, "");
+            photo.value=data;
+        } else {
+            clearphoto();
+        }
+        }
+        window.addEventListener('load', startup, false);
+        })();
+  </script>
+
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+
+{% block title %}Find Help{% endblock %}
+{% block content %}
+
+{% for message in messages %}
+
+<div class="alert mt-3 alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<br>
+<br>
+    <form action="{% url 'help' %}" method="POST">
+        {% csrf_token %}
+        <input name="city" placeholder="city"/>
+        <input name="radius" placeholder="radius" type="number"/><label>miles</label>
+        <button type="submit">submit</button>
+    </form>
+    {% for r in hospitals %}
+        {{r.name}}- {{r.rating}} stars
+        <br>
+        {{r.address}}
+        <br>
+        <br>
+        
+    {% endfor %}
+    {{location}}
+
+{% endblock %}
