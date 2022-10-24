@@ -12,7 +12,8 @@
 
    <br>
    <br>
-   <div class="moodcheck-div">
+   <br>
+   <div class="moodcheck-div" style="margin-top: 35px;">
     <form class="webcam" method="POST" action="{% url 'takePhoto' %}" enctype="multipart/form-data">
         <div class="card card-photo" style="width: 20rem;">
             <video class="card-img-top" id="video" autoplay></video>
@@ -23,7 +24,7 @@
         <div class="card card-journal" style="width: 20rem;">
             <div class="card-body">
                 <center>
-                <textarea placeholder="journal your thoughts" name="journal" class="write-journal"></textarea>
+                <textarea  placeholder="journal your thoughts" style="margin-bottom:15px;" name="journal" class="write-journal form-control"></textarea>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="basic-addon1">diet</span>

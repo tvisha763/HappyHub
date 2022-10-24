@@ -19,7 +19,7 @@ html{
 
 main{
     padding-bottom: 30px;
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 .chartbox{
@@ -184,3 +184,83 @@ html { height: 100%;}
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.find{
+    margin: auto;
+    background-color: #C492EF;
+    max-width: 50rem;
+    padding: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.createGrp{
+    background-color: #F7AEF8;
+    max-width: 50rem;
+    margin: auto;
+    padding: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  /* Control the left side */
+  .left {
+    left: 0;
+    background-color: #00171F;
+    color: #F4F4ED;
+
+  }
+  
+  /* Control the right side */
+  .right {
+    right: 0;
+    
+  }
+  
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+
+
+
+
+.chat{
+    height: 500px;
+    width: 700px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #F6D1F3;
+}
+
+.write{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    vertical-align: middle;
+}
+
+.emergencyCard{
+    background-color: #F7AEF8;
+    /* width: 30rem; */
+    margin: 30px;
+    padding: 30px;
+}

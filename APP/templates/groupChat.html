@@ -8,39 +8,63 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
-    <h1>{{group.name}}</h1>
-    <p>{{group.description}}</p>
-    <h3>Members: {{number}}</h3>
-    <ul>
-        {% for m in members %}
-            <li>{{m.user.username}}</li>
-        {% endfor %}
-    </ul>
+<div class="split left">
+    <div class="centered">
+        <h1 style="margin:30px;">{{group.name}}</h1>
+        <p>{{group.description}}</p>
+        <h3>Members: {{number}}</h3>
+        
+            {% for m in members %}
+               {{m.user.username}}
+               <br>
+            {% endfor %}
+        <br>
+        
+        <form action="{% url 'leaveGroup' %}" method="post" id="join">
+            {% csrf_token %}
+            <input type="hidden" name="group" value="{{group.name}}">
+            <button class="btn btn-light" type = "submit">Leave</button>
+        </form>
+    </div>
+  </div>
+  
+  <div class="split right">
+    <div class=" cent-right">
+        <center>
+        <br>
+        <br><br>
+        <div class="write">
+            <form class="message-write" action="{% url 'groupChat' id.id %}" method="post">
+                {% csrf_token %}
+                <!-- <input type="hidden"  value="{{book_looked_up.id}}" name="bookToComment" id="bookToComment"> -->
+                <textarea style="display: inline-block; vertical-align: middle; margin: 20px; width: 30rem;" class="form-control" type="text" placeholder="Type your message here" name="message"></textarea>
+                <button style="display: inline-block;" class="btn btn-dark" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                  </svg></button>
+            </form>
+        </div>
+        
+        <div class="chat">
+            {% for c in chat %}
+                        
+            <strong>
+                {{ c.user.username }} - 
+                {{ c.date }}
+            </strong>
+            <br/>
+            {{ c.message }}
+            <!-- <br/> -->
+            <hr>
+                          
+                        
+            {% endfor %}
+        </div>
+        
+    </center>
+    </div>
+  </div>
+    
 
-    <form action="{% url 'groupChat' id.id %}" method="post">
-        {% csrf_token %}
-        <!-- <input type="hidden"  value="{{book_looked_up.id}}" name="bookToComment" id="bookToComment"> -->
-        <textarea type="text" placeholder="Type your opinion here" name="message"></textarea>
-        </br>
-        <button type="submit">Post</button>
-    </form>
-
-    {% for c in chat %}
-                    
-        <strong>
-            {{ c.user.username }} - 
-            {{ c.date }}
-        </strong>
-        <br/>
-        {{ c.message }}
-        <!-- <br/> -->
-        <hr>
-                      
-                    
-    {% endfor %}
-    <form action="{% url 'leaveGroup' %}" method="post" id="join">
-        {% csrf_token %}
-        <input type="hidden" name="group" value="{{group.name}}">
-        <button type = "submit">Leave</button>
-    </form>
+   
+    
 {% endblock %}

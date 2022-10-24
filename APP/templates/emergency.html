@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert mt-3 alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+    <br>
+    <br>
+    <div class="emergencyCard">
+        <strong>24-HOUR SUICIDE AND CRISIS LIFELINE: 988</strong><p>call or text</p>
+    </div>
+    
+{% endblock %}

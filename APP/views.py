@@ -319,11 +319,14 @@ def help(request):
         return redirect('/app2/login')
     else:
         if request.method == "POST":
-            city = request.POST.get('city')
+            address = request.POST.get('address')
+            zipcode = request.POST.get('zip')
+            state = request.POST.get('state')
+            country = request.POST.get('country')
             radiusM = float(request.POST.get('radius'))
             radiusNum = radiusM*1609.344
             radius = str(radiusNum)
-            if city == '' or radius == '':
+            if address == '' or zipcode == '' or state == '' or country == '' or radius == '':
                  messages.error(request, "Please enter all the information.")
                  hospitals = []
                  context = {
@@ -337,7 +340,7 @@ def help(request):
             else:
                 geolocator = Nominatim(user_agent = "locationFinder")
 
-                location = geolocator.geocode(city)
+                location = geolocator.geocode(address + ', ' + zipcode + ', ' + state + ', ' + country)
 
                 
                 
@@ -580,6 +583,8 @@ def groupChat(request, group_id):
         }
         return render(request, 'groupChat.html', context)
 
+def emergency(request):
+    return render(request, 'emergency.html')
 
 # def newUserMail(request, uname):
 #     user = User.objects.get(username=uname)

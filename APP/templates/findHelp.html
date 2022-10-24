@@ -12,20 +12,65 @@
 {% endfor %}
 <br>
 <br>
+<div class="find">
+    <center>
     <form action="{% url 'help' %}" method="POST">
         {% csrf_token %}
-        <input name="city" placeholder="city"/>
-        <input name="radius" placeholder="radius" type="number"/><label>miles</label>
-        <button type="submit">submit</button>
-    </form>
-    {% for r in hospitals %}
-        {{r.name}}- {{r.rating}} stars
-        <br>
-        {{r.address}}
-        <br>
-        <br>
+        <div class="input-group mb-3" >
+            <div class="input-group-prepend">
+              <span class="input-group-text" >street address</span>
+            </div>
+            <input name="address" type="text" class="form-control" >
+        </div>
+        <div style="display: inline-block; margin-right: 10px;">
+        <div class="input-group mb-3"  style="width: 360px; ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >zip code</span>
+            </div>
+            <input name="zip" type="text" class="form-control">
+        </div>
+        <div class="input-group mb-3" style="width: 360px; ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >country</span>
+            </div>
+            <input name="country" type="text" class="form-control" >
+        </div>
+        </div>
+        <div style="display: inline-block;">
+        <div class="input-group mb-3" style="width: 360px; ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >state</span>
+            </div>
+            <input name="state" type="text" class="form-control" >
+        </div>
         
-    {% endfor %}
-    {{location}}
+        <div class="input-group mb-3" style="width: 360px;">
+            <input name="radius" placeholder="radius" type="number" class="form-control">
+            <div class="input-group-postpend">
+                <span class="input-group-text" >miles</span>
+              </div>
+        </div>
+    </div>
+        <button type="submit" class="btn btn-dark" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); display: block;">submit</button>
+    </form>
+</center>
+</div>
 
+<div class="help" style="margin-top: 50px; display: flex; vertical-align: top;">
+    <center>
+        {% for r in hospitals %}
+            <div class="card text-white bg-dark mb-3" style="width: 18rem;  vertical-align: top; height: 200px; display: inline-block;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin: 20px;">
+                <div class="card-header">{{r.rating}} stars</div>
+                <div class="card-body">
+                <h5 class="card-title">{{r.name}}</h5>
+                <p class="card-text">{{r.address}}</p>
+                </div>
+            </div>
+       
+            
+        {% endfor %}
+    
+    </center>
+</div>
+    
 {% endblock %}
