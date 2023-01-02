@@ -112,7 +112,7 @@ def signup(request):
                 return redirect('login')
         else:
             if request.session.get('logged_in'):
-                return redirect('/app2/login')
+                return redirect('/login')
     else:
         return redirect('dashboard')
 
@@ -151,7 +151,7 @@ def login(request):
 
         else:
             if request.session.get('logged_in'):
-                return redirect('/app2/login')
+                return redirect('/login')
 
         return render(request, 'auth/login.html')
     else:
@@ -159,11 +159,11 @@ def login(request):
 
 def logout(request):
     if not request.session.get('logged_in') or not request.session.get('username'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         request.session["username"] = None
         request.session['logged_in'] = False
-        return redirect('/app2/home')
+        return redirect('/')
 
 
 
@@ -173,7 +173,7 @@ def home(request):
 
 def moodChecker(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         
         return render(request, 'moodChecker.html')
@@ -250,7 +250,7 @@ def mailCheck(request):
 
 def takePhoto(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     if request.method== 'POST':      
         today = date.today()
         
@@ -316,7 +316,7 @@ def takePhoto(request):
 
 def help(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         if request.method == "POST":
             address = request.POST.get('address')
@@ -392,7 +392,7 @@ def help(request):
         
 def group(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         allGroups = ChatGroup.objects.all()
         groups = []
@@ -438,7 +438,7 @@ def group(request):
 
 def joinGroup(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         if request.method == "POST":
             user = User.objects.get(username=request.session["username"])
@@ -462,7 +462,7 @@ def joinGroup(request):
 
 def dashboard(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         user = User.objects.get(username=request.session["username"])
         week = timezone.now() - timedelta(days=7)
@@ -541,7 +541,7 @@ def dashboard(request):
 
 def leaveGroup(request):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         if request.method == "POST":
             user = User.objects.get(username=request.session["username"])
@@ -553,7 +553,7 @@ def leaveGroup(request):
 
 def groupChat(request, group_id):
     if not request.session.get('logged_in'):
-        return redirect('/app2/login')
+        return redirect('/login')
     else:
         username = request.session.get("username")
         user = User.objects.get(username=request.session["username"])
