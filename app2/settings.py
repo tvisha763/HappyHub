@@ -143,3 +143,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent # or manually set the path of 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 BASE_COUNTRY = "USA"
+
+import django_heroku
+django_heroku.settings(locals())
